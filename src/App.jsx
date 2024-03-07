@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
-import Chart from "./components/chart";
-import AddForm from "./components/addForm";
+import ContactsList from "./components/contactsList";
+import NewContactForm from "./components/newContactForm";
 import "./App.css";
 
 const Main = styled.main`
@@ -31,10 +32,8 @@ const AddBtn = styled.button`
   }
 `;
 
-
 function App() {
-
-  const [contactsState, setContactsState] = useState([]);
+  const [contactsList, setContactsList] = useState([]);
   const [showFormState, setShowFormState] = useState(false);
   const [newContactState, setNewContactState] = useState({
     name: "",
@@ -43,6 +42,32 @@ function App() {
     id: "",
   });
 
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((res) => setContactsList(res.data))
+      .catch((error) => {
+        console.error("Error fetching contacts:", error);
+      });
+  }, []);
+
+  const onAddContact = () => {
+    setContactsList([...contactsList, newContactState]);
+    
+    setNewContactState({
+      name: "",
+      username: "",
+      phone: "",
+      id: contactsList.length + 1,
+    });
+    handleShowForm();
+  };
+
+
+  const onDeleteContact = (contactToDeleteId) => {
+    setContactsList(contactsList.filter((contact) => contact.id !== contactToDeleteId));
+  };
+
   const handleShowForm = () => {
     setShowFormState(!showFormState);
   };
@@ -50,17 +75,16 @@ function App() {
   return (
     <Main>
       <H1>List of Contacts</H1>
-      <Chart contactsState={contactsState} setContactsState={setContactsState}/>
+      <ContactsList contactsList={contactsList} onDelete={onDeleteContact} />
       <AddBtn onClick={handleShowForm}>Add new contact</AddBtn>
-      {showFormState && <AddForm 
-          contactsState={contactsState}
-          setContactsState={setContactsState}
-          newContactState={newContactState} 
+      {showFormState && (
+        <NewContactForm
+          onAddContact={onAddContact}
+          newContactState={newContactState}
           setNewContactState={setNewContactState}
-          showFormState={showFormState}
-          setShowFormState={setShowFormState}
+          handleShowForm={handleShowForm}
         />
-      }
+      )}
     </Main>
   );
 }

@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect } from "react";
 import styled from "styled-components";
 
 const Table = styled.table`
@@ -32,20 +30,7 @@ const DeleteBtn = styled.button`
 `;
 
 
-function Chart({contactsState, setContactsState}) {
-  
-  useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((res) => setContactsState(res.data))
-      .catch((error) => {
-        console.error("Error fetching contacts:", error);
-      });
-  }, []);
-
-  const onDeleteContact = (id) => {
-    setContactsState(contactsState.filter((contact) => contact.id !== id));
-  };
+function Chart({contactsList, onDelete}) {
 
   return (
     <Table>
@@ -58,14 +43,14 @@ function Chart({contactsState, setContactsState}) {
         </tr>
       </thead>
       <tbody>
-      {contactsState.length > 0 ? (
-          contactsState.map((contact) => (
+      {contactsList.length > 0 ? (
+          contactsList.map((contact) => (
             <TR key={contact.id}>
               <td>{contact.name}</td>
               <td>{contact.username}</td>
               <td>{contact.phone}</td>
               <td>
-                <DeleteBtn onClick={() => onDeleteContact(contact.id)}>
+                <DeleteBtn onClick={() => onDelete(contact.id)}>
                   Видалити
                 </DeleteBtn>
               </td>

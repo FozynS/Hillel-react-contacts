@@ -52,55 +52,49 @@ const Input = styled.input`
   height: 20px;
 `;
 
-function AddForm ({contactsState, setContactsState, newContactState, setNewContactState, showFormState, setShowFormState}) {
+const H2 = styled.h2`
+  color: #fff;
+`;
 
-  const handleShowForm = () => {
-    setShowFormState(!showFormState);
-  };
-
-  const saveNewContact = () => {
-    setContactsState([...contactsState, newContactState]);
-    setNewContactState({ name: "", username: "", phone: "", id: contactsState.length + 1});
-    handleShowForm();
-  };
+function AddForm({ onAddContact, newContactState, setNewContactState, handleShowForm}) {
 
   return (
     <FormDiv>
-      <h2 style={{ color: "#fff" }}>Form for add new contact</h2>
+      <H2>Form for add new contact</H2>
 
-      <Input 
-        type="text" 
-        placeholder="Name" 
+      <Input
+        type="text"
+        placeholder="Name"
         value={newContactState.name}
-        onChange={(e) => 
-          setNewContactState({...newContactState, name: e.target.value})
+        onChange={(e) =>
+          setNewContactState({ ...newContactState, name: e.target.value })
         }
       />
 
-      <Input 
-        type="text" 
-        placeholder="Last name" 
+      <Input
+        type="text"
+        placeholder="Last name"
         value={newContactState.username}
-        onChange={(e) => 
-          setNewContactState({...newContactState, username: e.target.value})
+        onChange={(e) =>
+          setNewContactState({ ...newContactState, username: e.target.value })
         }
       />
 
-      <Input 
-        type="text" 
-        placeholder="Phone number" 
+      <Input
+        type="text"
+        placeholder="Phone number"
         value={newContactState.phone}
-        onChange={(e) => 
-          setNewContactState({...newContactState, phone: e.target.value})
+        onChange={(e) =>
+          setNewContactState({ ...newContactState, phone: e.target.value })
         }
       />
 
       <BtnsDiv>
         <Cancel onClick={handleShowForm}>Cancel</Cancel>
-        <Save onClick={saveNewContact}>Save</Save>
+        <Save onClick={onAddContact}>Save</Save>
       </BtnsDiv>
     </FormDiv>
-  )
+  );
 }
 
 export default AddForm;
