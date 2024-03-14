@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Hillel-react-contacts/static/css/main.721be905.css",
-    "main.js": "/Hillel-react-contacts/static/js/main.6e26559f.js",
+    "main.js": "/Hillel-react-contacts/static/js/main.a4c9f1c8.js",
     "index.html": "/Hillel-react-contacts/index.html",
     "main.721be905.css.map": "/Hillel-react-contacts/static/css/main.721be905.css.map",
-    "main.6e26559f.js.map": "/Hillel-react-contacts/static/js/main.6e26559f.js.map"
+    "main.a4c9f1c8.js.map": "/Hillel-react-contacts/static/js/main.a4c9f1c8.js.map"
   },
   "entrypoints": [
     "static/css/main.721be905.css",
-    "static/js/main.6e26559f.js"
+    "static/js/main.a4c9f1c8.js"
   ]
 }
