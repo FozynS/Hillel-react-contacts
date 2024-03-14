@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import styled from "styled-components";
 import ContactsList from "./components/contactsList";
 import NewContactForm from "./components/newContactForm";
+import styled from "styled-components";
 import "./App.css";
 
 const Main = styled.main`
@@ -34,13 +34,8 @@ const AddBtn = styled.button`
 
 function App() {
   const [contactsList, setContactsList] = useState([]);
+
   const [showFormState, setShowFormState] = useState(false);
-  const [newContactState, setNewContactState] = useState({
-    name: "",
-    username: "",
-    phone: "",
-    id: "",
-  });
 
   useEffect(() => {
     axios
@@ -51,21 +46,16 @@ function App() {
       });
   }, []);
 
-  const onAddContact = () => {
-    setContactsList([...contactsList, newContactState]);
-    
-    setNewContactState({
-      name: "",
-      username: "",
-      phone: "",
-      id: contactsList.length + 1,
-    });
+  const onAddContact = (newContactObject) => {
+    newContactObject['id'] = contactsList.length + 1;
+    setContactsList([...contactsList, newContactObject]);
     handleShowForm();
   };
 
-
   const onDeleteContact = (contactToDeleteId) => {
-    setContactsList(contactsList.filter((contact) => contact.id !== contactToDeleteId));
+    setContactsList(
+      contactsList.filter((contact) => contact.id !== contactToDeleteId)
+    );
   };
 
   const handleShowForm = () => {
@@ -80,8 +70,6 @@ function App() {
       {showFormState && (
         <NewContactForm
           onAddContact={onAddContact}
-          newContactState={newContactState}
-          setNewContactState={setNewContactState}
           handleShowForm={handleShowForm}
         />
       )}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const FormDiv = styled.div`
@@ -56,7 +57,14 @@ const H2 = styled.h2`
   color: #fff;
 `;
 
-function AddForm({ onAddContact, newContactState, setNewContactState, handleShowForm}) {
+function AddForm({ onAddContact, handleShowForm}) {
+
+  const [newContactState, setNewContactState] = useState({
+    name: "",
+    username: "",
+    phone: "",
+    id: "",
+  });
 
   return (
     <FormDiv>
@@ -91,7 +99,7 @@ function AddForm({ onAddContact, newContactState, setNewContactState, handleShow
 
       <BtnsDiv>
         <Cancel onClick={handleShowForm}>Cancel</Cancel>
-        <Save onClick={onAddContact}>Save</Save>
+        <Save onClick={() => onAddContact(newContactState)}>Save</Save>
       </BtnsDiv>
     </FormDiv>
   );
